@@ -1,0 +1,13 @@
+name: 'Scope for Gradle'
+author: 'Daniel Rodriguez <@drodriguezhdez> | UndefinedLabs'
+description: 'Automatically instruments and run your tests using Scope Java agent.'
+inputs:
+  dsn:
+    description: 'Scope DSN'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'check-square'
+  color: 'purple'

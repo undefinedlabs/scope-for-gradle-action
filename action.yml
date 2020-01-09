@@ -11,7 +11,7 @@ inputs:
     required: true
   command:
     description: 'Command to run your tests. default: gradle test'
-    default: 'gradle test'
+    default: 'gradlew test'
     required: true
 runs:
   using: 'node12'

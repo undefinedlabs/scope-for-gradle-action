@@ -43,7 +43,7 @@ steps:
     uses: undefinedlabs/scope-for-gradle-action@v1
     with:
       dsn: ${{secrets.SCOPE_DSN}} # required
-      run-tests: false # optional - default is 'true'
+      run-tests: false
   - name: Gradle Build
     run: ./gradlew build --init-script initscope.gradle
 ```

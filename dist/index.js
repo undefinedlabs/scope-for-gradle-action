@@ -5639,7 +5639,7 @@ function instrument(agentVersion, scopeGradlePluginVersion) {
         if (!scopeAgentPath.endsWith(".jar")) {
             yield io.mv(scopeAgentPath, scopeAgentPath + ".jar");
         }
-        const gradleInstrumentatorPath = yield tc.downloadTool("https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-instrumentation-for-gradle/0.1.0-beta.1/scope-instrumentation-for-maven-0.1.0-beta.1.jar");
+        const gradleInstrumentatorPath = yield tc.downloadTool("https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-instrumentation-for-gradle/0.1.0-beta.1/scope-instrumentation-for-gradle-0.1.0-beta.1.jar");
         if (!gradleInstrumentatorPath.endsWith(".jar")) {
             yield io.mv(gradleInstrumentatorPath, gradleInstrumentatorPath + ".jar");
         }

@@ -28,6 +28,8 @@ steps:
       command: ./gradlew test # optional - default is './gradlew test'
 ```
 
+### Manual test command
+
 If you want to execute the test command manually, it is needed to add the `--init-script initscope.gradle` option to the run step.
 
 ```yml

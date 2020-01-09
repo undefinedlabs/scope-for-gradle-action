@@ -9,7 +9,7 @@ export async function instrument(agentVersion:string, scopeGradlePluginVersion:s
         await io.mv(scopeAgentPath, scopeAgentPath+".jar");
     }
 
-    const gradleInstrumentatorPath = await tc.downloadTool("https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-instrumentation-for-gradle/0.1.0-beta.1/scope-instrumentation-for-gradle-0.1.0-beta.1.jar");
+    const gradleInstrumentatorPath = await tc.downloadTool("https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-instrumentation-for-gradle/0.1.0/scope-instrumentation-for-gradle-0.1.0.jar");
     if(!gradleInstrumentatorPath.endsWith(".jar")){
         await io.mv(gradleInstrumentatorPath, gradleInstrumentatorPath+".jar");
     }

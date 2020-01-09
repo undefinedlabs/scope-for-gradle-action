@@ -5643,7 +5643,7 @@ function instrument(agentVersion, scopeGradlePluginVersion) {
         if (!gradleInstrumentatorPath.endsWith(".jar")) {
             yield io.mv(gradleInstrumentatorPath, gradleInstrumentatorPath + ".jar");
         }
-        yield exec.exec("sh -c \"java -jar " + gradleInstrumentatorPath + " " + scopeGradlePluginVersion + " " + scopeAgentPath + ".jar " + workdir + " \"");
+        yield exec.exec("sh -c \"java -jar " + gradleInstrumentatorPath + ".jar " + scopeGradlePluginVersion + " " + scopeAgentPath + ".jar " + workdir + " \"");
     });
 }
 exports.instrument = instrument;

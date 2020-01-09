@@ -14,5 +14,5 @@ export async function instrument(agentVersion:string, scopeGradlePluginVersion:s
         await io.mv(gradleInstrumentatorPath, gradleInstrumentatorPath+".jar");
     }
 
-    await exec.exec("sh -c \"java -jar "+gradleInstrumentatorPath+" "+scopeGradlePluginVersion+" "+scopeAgentPath+".jar "+workdir+" \"");
+    await exec.exec("sh -c \"java -jar "+gradleInstrumentatorPath+".jar "+scopeGradlePluginVersion+" "+scopeAgentPath+".jar "+workdir+" \"");
 }

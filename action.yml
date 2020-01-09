@@ -5,6 +5,14 @@ inputs:
   dsn:
     description: 'Scope DSN'
     required: true
+  run-tests:
+    description: 'Flag to indicate if tests must be run. default: true'
+    default: 'true'
+    required: true
+  command:
+    description: 'Command to run your tests. default: gradle test'
+    default: 'gradle test'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'

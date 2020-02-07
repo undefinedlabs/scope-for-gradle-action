@@ -5635,6 +5635,7 @@ const tc = __importStar(__webpack_require__(602));
 function instrument(agentVersion, scopeGradlePluginVersion) {
     return __awaiter(this, void 0, void 0, function* () {
         const workdir = process.cwd();
+        console.log("Downloading agent version: " + agentVersion);
         const scopeAgentPath = yield tc.downloadTool("https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-agent/" + agentVersion + "/scope-agent-" + agentVersion + ".jar");
         if (!scopeAgentPath.endsWith(".jar")) {
             yield io.mv(scopeAgentPath, scopeAgentPath + ".jar");

@@ -3,7 +3,7 @@ import * as executor from './executor'
 import * as exec from "@actions/exec";
 
 const SCOPE_AGENT_VERSION = "0.2.5-beta.11"
-const SCOPE_GRADLE_PLUGIN_VERSION = "0.1.0"
+const SCOPE_GRADLE_PLUGIN_VERSION = "0.1.1-beta.1"
 
 async function run() {
     try {

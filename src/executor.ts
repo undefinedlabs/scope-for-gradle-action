@@ -11,7 +11,7 @@ export async function instrument(allowBeta:boolean): Promise<void> {
     const workdir = process.cwd();
     const [agentVersion, pluginVersion, instrVersion] = await Promise.all([getVersionToUse(scopeAgentMetadataURL, allowBeta), getVersionToUse(scopeGradlePluginMetadataURL, false), getVersionToUse(scopeGradleInstrMetadataURL, false)])
 
-    const gradleInstrumentatorPath = await tc.downloadTool("https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-instrumentation-for-gradle/"+instrVersion+"/scope-instrumentation-for-gradle-"+instrVersion+".jar");
+    const gradleInstrumentatorPath = await tc.downloadTool(`https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-instrumentation-for-gradle/${instrVersion}/scope-instrumentation-for-gradle-${instrVersion}.jar`);
     if(!gradleInstrumentatorPath.endsWith(".jar")){
         await io.mv(gradleInstrumentatorPath, gradleInstrumentatorPath+".jar");
     }

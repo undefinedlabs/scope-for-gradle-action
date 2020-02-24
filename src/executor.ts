@@ -16,5 +16,5 @@ export async function instrument(allowBeta:boolean): Promise<void> {
         await io.mv(gradleInstrumentatorPath, gradleInstrumentatorPath+".jar");
     }
 
-    await exec.exec("sh -c \"java -jar "+gradleInstrumentatorPath+".jar "+pluginVersion+" "+agentVersion+" "+workdir+" \"");
+    await exec.exec(`sh -c "java -jar ${gradleInstrumentatorPath}.jar ${pluginVersion} ${agentVersion} ${workdir} "`);
 }

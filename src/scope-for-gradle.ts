@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import * as executor from './executor'
+import { instrument } from './executor'
 import * as exec from "@actions/exec";
 
 async function run() {

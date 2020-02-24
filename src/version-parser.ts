@@ -21,7 +21,7 @@ export async function getVersionToUse(url:string, allowBeta:boolean):Promise<str
     return ""
 }
 
-async function xml2json(xml:string):Promise<any> {
+function xml2json(xml:string):Promise<any> {
     return new Promise((resolve, reject) => {
         parseString(xml, function (err, json) {
             if (err)

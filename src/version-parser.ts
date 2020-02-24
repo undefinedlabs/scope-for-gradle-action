@@ -11,14 +11,11 @@ export async function getVersionToUse(url:string, allowBeta:boolean):Promise<str
     }
 
     const allVersions:string[] = json.metadata.versioning[0].versions[0].version;
-    for (let i = allVersions.length - 1 ; i >= 0; i--) {
-        const agentVersion = allVersions[i];
-        if(!agentVersion.includes("beta")){
-            return agentVersion;
-        }
+    const lastNonBeta = allVersions.slice().reverse().find(version => !version.includes('beta'))
+    if (!lastNonBeta) {
+        return ''
     }
-
-    return ""
+    return lastNonBeta;
 }
 
 function xml2json(xml:string):Promise<any> {

@@ -1205,25 +1205,21 @@ function getVersionToUse(url, allowBeta) {
             return releaseVersion;
         }
         const allVersions = json.metadata.versioning[0].versions[0].version;
-        for (let i = allVersions.length - 1; i >= 0; i--) {
-            const agentVersion = allVersions[i];
-            if (!agentVersion.includes("beta")) {
-                return agentVersion;
-            }
+        const lastNonBeta = allVersions.slice().reverse().find(version => !version.includes('beta'));
+        if (!lastNonBeta) {
+            return '';
         }
-        return "";
+        return lastNonBeta;
     });
 }
 exports.getVersionToUse = getVersionToUse;
 function xml2json(xml) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((resolve, reject) => {
-            xml2js_1.parseString(xml, function (err, json) {
-                if (err)
-                    reject(err);
-                else
-                    resolve(json);
-            });
+    return new Promise((resolve, reject) => {
+        xml2js_1.parseString(xml, function (err, json) {
+            if (err)
+                reject(err);
+            else
+                resolve(json);
         });
     });
 }
@@ -13373,16 +13369,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const exec = __importStar(__webpack_require__(230));
 const io = __importStar(__webpack_require__(954));
 const tc = __importStar(__webpack_require__(602));
-const versionParser = __importStar(__webpack_require__(59));
+const version_parser_1 = __webpack_require__(59);
 const scopeAgentMetadataURL = "https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-agent/maven-metadata.xml";
 const scopeGradlePluginMetadataURL = "https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-gradle-plugin/maven-metadata.xml";
 const scopeGradleInstrMetadataURL = "https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-instrumentation-for-gradle/maven-metadata.xml";
 function instrument(allowBeta) {
     return __awaiter(this, void 0, void 0, function* () {
         const workdir = process.cwd();
-        const agentVersion = versionParser.getVersionToUse(scopeAgentMetadataURL, allowBeta);
-        const pluginVersion = versionParser.getVersionToUse(scopeGradlePluginMetadataURL, false);
-        const instrVersion = versionParser.getVersionToUse(scopeGradleInstrMetadataURL, false);
+        const [agentVersion, pluginVersion, instrVersion] = yield Promise.all([version_parser_1.getVersionToUse(scopeAgentMetadataURL, allowBeta), version_parser_1.getVersionToUse(scopeGradlePluginMetadataURL, false), version_parser_1.getVersionToUse(scopeGradleInstrMetadataURL, false)]);
         const gradleInstrumentatorPath = yield tc.downloadTool("https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-instrumentation-for-gradle/" + instrVersion + "/scope-instrumentation-for-gradle-" + instrVersion + ".jar");
         if (!gradleInstrumentatorPath.endsWith(".jar")) {
             yield io.mv(gradleInstrumentatorPath, gradleInstrumentatorPath + ".jar");

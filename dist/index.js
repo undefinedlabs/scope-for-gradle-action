@@ -13189,7 +13189,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(310));
-const executor = __importStar(__webpack_require__(826));
+const executor_1 = __webpack_require__(826);
 const exec = __importStar(__webpack_require__(230));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -13198,7 +13198,7 @@ function run() {
             core.exportVariable("SCOPE_DSN", dsn);
             let executeTestPhase = core.getInput("run-tests", { required: true });
             let command = core.getInput("command", { required: true });
-            yield executor.instrument(false);
+            yield executor_1.instrument(false);
             if (executeTestPhase == "true") {
                 yield exec.exec("sh -c \"" + command + " --init-script initscope.gradle\"");
             }
@@ -13377,11 +13377,11 @@ function instrument(allowBeta) {
     return __awaiter(this, void 0, void 0, function* () {
         const workdir = process.cwd();
         const [agentVersion, pluginVersion, instrVersion] = yield Promise.all([version_parser_1.getVersionToUse(scopeAgentMetadataURL, allowBeta), version_parser_1.getVersionToUse(scopeGradlePluginMetadataURL, false), version_parser_1.getVersionToUse(scopeGradleInstrMetadataURL, false)]);
-        const gradleInstrumentatorPath = yield tc.downloadTool("https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-instrumentation-for-gradle/" + instrVersion + "/scope-instrumentation-for-gradle-" + instrVersion + ".jar");
+        const gradleInstrumentatorPath = yield tc.downloadTool(`https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-instrumentation-for-gradle/${instrVersion}/scope-instrumentation-for-gradle-${instrVersion}.jar`);
         if (!gradleInstrumentatorPath.endsWith(".jar")) {
             yield io.mv(gradleInstrumentatorPath, gradleInstrumentatorPath + ".jar");
         }
-        yield exec.exec("sh -c \"java -jar " + gradleInstrumentatorPath + ".jar " + pluginVersion + " " + agentVersion + " " + workdir + " \"");
+        yield exec.exec(`sh -c "java -jar ${gradleInstrumentatorPath}.jar ${pluginVersion} ${agentVersion} ${workdir} "`);
     });
 }
 exports.instrument = instrument;

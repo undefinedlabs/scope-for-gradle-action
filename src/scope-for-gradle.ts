@@ -10,7 +10,7 @@ async function run() {
         let executeTestPhase = core.getInput("run-tests", {required: true});
         let command = core.getInput("command", {required: true});
 
-        await executor.instrument(false);
+        await instrument(false);
 
         if(executeTestPhase == "true") {
             await exec.exec("sh -c \""+command+" --init-script initscope.gradle\"")

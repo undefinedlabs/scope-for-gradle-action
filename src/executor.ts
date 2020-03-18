@@ -16,5 +16,10 @@ export async function instrument(allowBeta:boolean): Promise<void> {
         await io.mv(gradleInstrumentatorPath, gradleInstrumentatorPath+".jar");
     }
 
-    await exec.exec(`sh -c "java -jar ${gradleInstrumentatorPath}.jar ${pluginVersion} ${agentVersion} ${workdir} "`);
+    const scopeAgentPath = await tc.downloadTool(`https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-agent/${agentVersion}/scope-agent-${agentVersion}.jar`);
+    if(!scopeAgentPath.endsWith(".jar")) {
+        await io.mv(scopeAgentPath, scopeAgentPath+".jar");
+    }
+
+    await exec.exec(`sh -c "java -jar ${gradleInstrumentatorPath}.jar ${pluginVersion} ${scopeAgentPath}.jar ${workdir} "`);
 }

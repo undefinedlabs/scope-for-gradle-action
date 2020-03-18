@@ -13381,7 +13381,11 @@ function instrument(allowBeta) {
         if (!gradleInstrumentatorPath.endsWith(".jar")) {
             yield io.mv(gradleInstrumentatorPath, gradleInstrumentatorPath + ".jar");
         }
-        yield exec.exec(`sh -c "java -jar ${gradleInstrumentatorPath}.jar ${pluginVersion} ${agentVersion} ${workdir} "`);
+        const scopeAgentPath = yield tc.downloadTool(`https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-agent/${agentVersion}/scope-agent-${agentVersion}.jar`);
+        if (!scopeAgentPath.endsWith(".jar")) {
+            yield io.mv(scopeAgentPath, scopeAgentPath + ".jar");
+        }
+        yield exec.exec(`sh -c "java -jar ${gradleInstrumentatorPath}.jar ${pluginVersion} ${scopeAgentPath}.jar ${workdir} "`);
     });
 }
 exports.instrument = instrument;

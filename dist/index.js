@@ -13373,19 +13373,18 @@ const version_parser_1 = __webpack_require__(59);
 const scopeAgentMetadataURL = "https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-agent/maven-metadata.xml";
 const scopeGradlePluginMetadataURL = "https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-gradle-plugin/maven-metadata.xml";
 const scopeGradleInstrMetadataURL = "https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-instrumentation-for-gradle/maven-metadata.xml";
+const scopeNoTrackDep = "_scope_notrackdep";
 function instrument(allowBeta) {
     return __awaiter(this, void 0, void 0, function* () {
         const workdir = process.cwd();
         const [agentVersion, pluginVersion, instrVersion] = yield Promise.all([version_parser_1.getVersionToUse(scopeAgentMetadataURL, allowBeta), version_parser_1.getVersionToUse(scopeGradlePluginMetadataURL, false), version_parser_1.getVersionToUse(scopeGradleInstrMetadataURL, false)]);
         const gradleInstrumentatorPath = yield tc.downloadTool(`https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-instrumentation-for-gradle/${instrVersion}/scope-instrumentation-for-gradle-${instrVersion}.jar`);
-        if (!gradleInstrumentatorPath.endsWith(".jar")) {
-            yield io.mv(gradleInstrumentatorPath, gradleInstrumentatorPath + ".jar");
-        }
+        const finalGradleInstrumentatorPath = `${gradleInstrumentatorPath.replace('.jar', '')}${scopeNoTrackDep}.jar`;
+        yield io.mv(gradleInstrumentatorPath, finalGradleInstrumentatorPath);
         const scopeAgentPath = yield tc.downloadTool(`https://repo1.maven.org/maven2/com/undefinedlabs/scope/scope-agent/${agentVersion}/scope-agent-${agentVersion}.jar`);
-        if (!scopeAgentPath.endsWith(".jar")) {
-            yield io.mv(scopeAgentPath, scopeAgentPath + ".jar");
-        }
-        yield exec.exec(`sh -c "java -jar ${gradleInstrumentatorPath}.jar ${pluginVersion} ${scopeAgentPath}.jar ${workdir} "`);
+        const finalScopeAgentPath = `${scopeAgentPath.replace('.jar', '')}${scopeNoTrackDep}.jar`;
+        yield io.mv(scopeAgentPath, finalScopeAgentPath);
+        yield exec.exec(`sh -c "java -jar ${finalGradleInstrumentatorPath} ${pluginVersion} ${finalScopeAgentPath} ${workdir} "`);
     });
 }
 exports.instrument = instrument;
